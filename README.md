@@ -13,7 +13,7 @@ A visually appealing Plymouth splash screen theme inspired by the Lumon Industri
 To install and set the Lumon theme as your default Plymouth splash screen, run the following command in your terminal:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/namelessmonarch0/PlymouthLumonSplash/main/install.sh | sudo bash
+curl -sSL https://raw.githubusercontent.com/kudayyurter/PlymouthLumonSplash/main/install.sh | sudo bash
 ```
 
 This will automatically clone the repository, copy the theme files, and register it as your default splash.

@@ -5,7 +5,7 @@
 
 THEME_NAME="lumon"
 THEME_DIR="/usr/share/plymouth/themes/$THEME_NAME"
-REPO_URL="https://github.com/namelessmonarch0/PlymouthLumonSplash.git"
+REPO_URL="https://github.com/kudayyurter/PlymouthLumonSplash.git"
 
 # Check for root privileges
 if [ "$EUID" -ne 0 ]; then
