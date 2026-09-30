@@ -83,8 +83,8 @@ sudo rm -r /usr/share/plymouth/themes/lumon
 
 To pick a specific theme instead of the default, use `sudo plymouth-set-default-theme -R <name>`.
 
-## Credits
+## Credits and license
 
-A fan project inspired by Lumon Industries from *Severance*; not affiliated with Apple TV+. The repository has no license file yet.
+A fan project inspired by Lumon Industries from *Severance*; not affiliated with Apple TV+. Code is [MIT](LICENSE); the Lumon name and logo belong to their owners.
 
 *Created with care for the Lumon Industries family.*
