@@ -1,8 +1,8 @@
 # Define the total number of frames in your image sequence
-total_frames = 167; 
+total_frames = 168;
 
 # 1. Load the images into an array
-for (i = 0; i <= total_frames; i++) {
+for (i = 0; i < total_frames; i++) {
     frames[i] = Image("frame-" + i + ".png");
 }
 

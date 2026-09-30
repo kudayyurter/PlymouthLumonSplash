@@ -56,9 +56,9 @@ ffmpeg -loglevel error -y -f x11grab -draw_mouse 0 -framerate 50 -window_id "$wi
   -c:v libx264 -crf 12 -preset veryfast -pix_fmt yuv420p "$out/splash.mp4"
 wait $ply || true
 
-# 4. One full loop of the animation (167 frames at 25 fps = 6.68 s), starting on the
+# 4. One full loop of the animation (168 frames at 25 fps = 6.72 s), starting on the
 #    finished logo so the first frame is not a black screen.
 bash "$SKILL/scripts/to-gif.sh" "$out/splash.mp4" "$repo/.github/assets/demo" \
-  --start "${START:-5.5}" --length 6.68 --fps 25 --width 800
+  --start "${START:-5.5}" --length 6.72 --fps 25 --width 800
 rm -f "$repo/.github/assets/demo.mp4"   # keep the MP4 only for a github.com upload
 echo "raw capture: $out/splash.mp4"

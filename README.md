@@ -69,7 +69,7 @@ Two settings at the top of `lumon.script` control playback:
 | Setting | Default | What it does |
 |---|---|---|
 | `speed_factor` | `2` | Refreshes per frame. Plymouth refreshes at 50 Hz, so `1` is 50 fps, `2` is 25 fps, `3` is about 16 fps. |
-| `total_frames` | `167` | Loop length: plays `frame-0.png` through `frame-166.png`. Change it if you swap in your own frames. |
+| `total_frames` | `168` | How many frames to load and loop: plays `frame-0.png` through `frame-167.png`. Change it if you swap in your own frames. |
 
 Edit the files in the repo and re-run `sudo ./install.sh`, which copies them over and rebuilds the initramfs.
 
