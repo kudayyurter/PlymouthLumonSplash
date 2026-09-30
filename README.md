@@ -1,75 +1,90 @@
-# Lumon Plymouth Theme
+<div align="center">
 
-A visually appealing Plymouth splash screen theme inspired by the Lumon Industries aesthetic from *Severance*. It features a 168-frame animation that plays during the boot and shutdown process.
+# Lumon Plymouth theme
 
-## Features
+**The Lumon globe from *Severance* as your Linux boot splash.**
 
-- 168-frame animation sequence.
-- Centered layout compatible with various screen resolutions.
-- Simple installation script included.
+[Install](#install) · [Customize](#customize) · [Uninstall](#uninstall)
 
-## Quick Install (One-liner)
+<img src=".github/assets/demo.gif" alt="On a black boot screen, the Lumon globe traces itself line by line, then the LUMON wordmark fades in and glows" width="800">
 
-To install and set the Lumon theme as your default Plymouth splash screen, run the following command in your terminal:
+</div>
+
+A [Plymouth](https://gitlab.freedesktop.org/plymouth/plymouth) theme that plays the Lumon Industries logo animation while your machine boots and shuts down. It's one short Plymouth script and a folder of PNG frames, so it works on any distribution that boots with Plymouth.
+
+- **Draws itself in:** a 6.7-second loop at 25 fps. The globe traces its lines, then the wordmark fades in with a soft glow.
+- **Stays centered:** the 1080×1080 frames are re-centered on every refresh, so a resolution change mid-boot doesn't knock it off-center.
+- **Boot and shutdown:** Plymouth shows the same theme for both.
+- **One-command install:** `install.sh` copies the files, sets the theme and rebuilds your initramfs.
+
+> [!NOTE]
+> Plymouth must already be installed and enabled at boot (for example, `splash` on your kernel command line). Installing needs root; the one-liner also needs `curl` and `git`.
+
+## Install
+
+One line. It clones the repo to a temporary folder and runs the installer as root:
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/kudayyurter/PlymouthLumonSplash/main/install.sh | sudo bash
 ```
 
-This will automatically clone the repository, copy the theme files, and register it as your default splash.
+Or from a clone:
 
-## Manual Installation
+```bash
+git clone https://github.com/kudayyurter/PlymouthLumonSplash.git
+cd PlymouthLumonSplash
+sudo ./install.sh
+```
 
-If you prefer to install manually or have already cloned the repository:
+Reboot to see it. Running `plymouth-set-default-theme` with no arguments prints the active theme, which should now be `lumon`.
 
-1.  **Navigate to the root directory:**
-    ```bash
-    cd PlymouthLumonSplash
-    ```
+<details><summary>Install by hand (if the script doesn't suit your distribution)</summary>
 
-2.  **Run the installation script with sudo:**
-    ```bash
-    sudo ./install.sh
-    ```
+```bash
+sudo mkdir -p /usr/share/plymouth/themes/lumon
+sudo cp contents/splash/*.png contents/splash/lumon.plymouth contents/splash/lumon.script /usr/share/plymouth/themes/lumon/
+sudo plymouth-set-default-theme -R lumon
+```
 
-The script will:
-- Copy the theme files to `/usr/share/plymouth/themes/lumon/`.
-- Register the theme with Plymouth.
-- Update your `initramfs` (using `plymouth-set-default-theme -R`).
+`-R` rebuilds the initramfs. If yours isn't rebuilt that way, run your distribution's tool yourself, for example on Arch with mkinitcpio:
 
-## Manual Steps (Advanced)
+```bash
+sudo mkinitcpio -P
+```
 
-If the script doesn't work for your distribution, follow these manual steps:
+</details>
 
-1.  Create the theme directory:
-    ```bash
-    sudo mkdir -p /usr/share/plymouth/themes/lumon
-    ```
+## Customize
 
-2.  Copy all files from `contents/splash/` to that directory:
-    ```bash
-    sudo cp contents/splash/*.png contents/splash/*.plymouth contents/splash/*.script /usr/share/plymouth/themes/lumon/
-    ```
+The theme lives in [`contents/splash/`](contents/splash/):
 
-3.  Apply the theme (Debian/Ubuntu/Fedora):
-    ```bash
-    sudo plymouth-set-default-theme -R lumon
-    ```
+| File | What it is |
+|---|---|
+| [`lumon.plymouth`](contents/splash/lumon.plymouth) | Theme metadata; tells Plymouth to run the script from `/usr/share/plymouth/themes/lumon` |
+| [`lumon.script`](contents/splash/lumon.script) | Loads the frames and swaps them on each refresh, centered on screen |
+| `frame-*.png` | The animation: 168 numbered frames, 1080×1080 on black |
 
-    *On some distributions like Arch Linux, you might need to manually update your `initramfs`:*
-    ```bash
-    sudo mkinitcpio -P linux
-    ```
+Two settings at the top of `lumon.script` control playback:
 
-## Requirements
+| Setting | Default | What it does |
+|---|---|---|
+| `speed_factor` | `2` | Refreshes per frame. Plymouth refreshes at 50 Hz, so `1` is 50 fps, `2` is 25 fps, `3` is about 16 fps. |
+| `total_frames` | `168` | How many frames to load and loop: plays `frame-0.png` through `frame-167.png`. Change it if you swap in your own frames. |
 
-- **Plymouth:** Ensure Plymouth is installed and configured on your system.
-- **Root Privileges:** Required to write to `/usr/share/plymouth/`.
-- **Git:** Required for the quick install script.
+Edit the files in the repo and re-run `sudo ./install.sh`, which copies them over and rebuilds the initramfs.
 
-## Preview
+## Uninstall
 
-The theme features the Lumon logo animation sequence.
+```bash
+plymouth-set-default-theme --list                          # themes you have installed
+sudo plymouth-set-default-theme --reset --rebuild-initrd   # back to your distribution's default
+sudo rm -r /usr/share/plymouth/themes/lumon
+```
 
----
+To pick a specific theme instead of the default, use `sudo plymouth-set-default-theme -R <name>`.
+
+## Credits and license
+
+A fan project inspired by Lumon Industries from *Severance*; not affiliated with Apple TV+. Code is [MIT](LICENSE); the Lumon name and logo belong to their owners.
+
 *Created with care for the Lumon Industries family.*
